@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jgrapht.Graph;
@@ -70,4 +71,10 @@ public class Model {
 		return result ;
 	}
 	
+	public Map<NTA, Integer> simula(double probShare, int durationShare) {
+		Simulator sim = new Simulator(this.grafo, probShare, durationShare) ;
+		sim.init();
+		sim.run();
+		return sim.getNumTotShare() ;
+	}
 }

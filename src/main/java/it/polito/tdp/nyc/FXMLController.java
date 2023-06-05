@@ -2,10 +2,12 @@ package it.polito.tdp.nyc;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.nyc.model.Arco;
 import it.polito.tdp.nyc.model.Model;
+import it.polito.tdp.nyc.model.NTA;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -58,14 +60,18 @@ public class FXMLController {
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
 
+    private boolean grafoCreato = false ;
+    
     @FXML
     void doAnalisiArchi(ActionEvent event) {
-    	
+    	if(!this.grafoCreato) {
+    		txtResult.appendText("Devi prima creare il grafo\n");
+    		return ;
+    	}
     	List<Arco> archi = model.analisiArchi() ;
     	for(Arco a: archi) {
     		txtResult.appendText(a+"\n");
     	}
-
     }
 
     @FXML
@@ -77,12 +83,44 @@ public class FXMLController {
     	}
     	
     	model.creaGrafo(borough);
+    	txtResult.setText("Grafo creato\n\n");
+    	this.grafoCreato = true ;
     	
     }
 
     @FXML
     void doSimula(ActionEvent event) {
+    	
+    	if(!this.grafoCreato) {
+    		txtResult.appendText("Devi prima creare il grafo\n");
+    		return ;
+    	}
 
+    	
+    	String probS = txtProb.getText() ;
+    	String durationS = txtDurata.getText() ;
+    	
+    	if(probS.equals("") || durationS.equals("")) {
+    		txtResult.appendText("Errore: parametri obbligatori\n");
+    		return ;
+    	}
+    	
+    	double prob = 0.0 ;
+    	int duration = 0 ;
+
+    	try {
+	    	prob = Double.parseDouble(probS) ;
+	    	duration = Integer.parseInt(durationS) ;
+    	} catch(NumberFormatException e) {
+    		txtResult.appendText("Errore: inserire dati numerici\n");
+    		return ;
+    	}
+    	
+    	Map<NTA, Integer> condivisioni = model.simula(prob, duration);
+    	
+    	for(NTA n : condivisioni.keySet()) {
+    		txtResult.appendText(n.getNTACode()+ " "+ condivisioni.get(n)+"\n");
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
