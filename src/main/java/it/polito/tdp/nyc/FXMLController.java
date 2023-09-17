@@ -82,6 +82,8 @@ public class FXMLController {
     		return ;
     	}
     	
+    	
+    	// ogni NTA è un vertice nel grafo, poi estraggo SSID dato NTA
     	model.creaGrafo(borough);
     	txtResult.setText("Grafo creato\n\n");
     	this.grafoCreato = true ;

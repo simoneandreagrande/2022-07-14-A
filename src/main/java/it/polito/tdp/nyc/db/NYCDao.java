@@ -60,13 +60,16 @@ public class NYCDao {
 	public List<NTA> getNTAbyBorough(String borough) {
 		String sql = "SELECT distinct NTACode, SSID "
 				+ "FROM nyc_wifi_hotspot_locations "
-				+ "WHERE Borough=? "
-				+ "ORDER BY NTACode " ;
+				+ "WHERE Borough = ? "
+				+ "ORDER BY NTACode" ;
 		List<NTA> result = new ArrayList<>() ;
+		
+		// creo una classe NTA che contenga il codice NTA e un set di SSID
 		try {
 			Connection conn = DBConnect.getConnection();
 			PreparedStatement st= conn.prepareStatement(sql);
 			st.setString(1, borough) ;
+			// eseguiamo la query
 			ResultSet res = st.executeQuery() ;
 			
 			String lastNTACode = "" ;

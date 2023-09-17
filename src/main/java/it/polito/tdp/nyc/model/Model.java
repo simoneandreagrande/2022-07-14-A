@@ -35,8 +35,10 @@ public class Model {
 //		System.out.println(this.NTAs) ;
 		
 		this.grafo = new SimpleWeightedGraph<>(DefaultWeightedEdge.class) ;
+		// al grafo aggiungo i vertici
 		Graphs.addAllVertices(this.grafo, this.NTAs) ;
 		
+		// aggiungo anche gli archi, con le coppie di vertici
 		for(NTA n1: this.NTAs) {
 			for(NTA n2: this.NTAs) {
 				if(n1.getNTACode().compareTo(n2.getNTACode())<0) { // !n1.equals(n2)
