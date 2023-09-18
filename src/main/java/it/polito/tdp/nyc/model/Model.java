@@ -41,20 +41,21 @@ public class Model {
 		// aggiungo anche gli archi, con le coppie di vertici
 		for(NTA n1: this.NTAs) {
 			for(NTA n2: this.NTAs) {
-				if(n1.getNTACode().compareTo(n2.getNTACode())<0) { // !n1.equals(n2)
+				if(n1.getNTACode().compareTo(n2.getNTACode())<0) { // !n1.equals(n2) in questo caso scelgo un ordine, non si aggiunge comunque l'arco
 					Set<String> unione = new HashSet<>(n1.getSSIDs()) ;
 					unione.addAll(n2.getSSIDs()) ;
 					Graphs.addEdge(this.grafo, n1, n2, unione.size()) ;
 				}
 			}
 		}
+		// non esistono gli archi di peso zero, per definizione della query
 		System.out.println("Vertici: "+this.grafo.vertexSet().size()+", Archi: "+this.grafo.edgeSet().size());	
 	}
 	
 	public List<Arco> analisiArchi() {
 		double media = 0.0 ;
 		for(DefaultWeightedEdge e: this.grafo.edgeSet()) {
-			media = media + this.grafo.getEdgeWeight(e) ;
+			media = media + this.grafo.getEdgeWeight(e) ;  // metodo di grafo
 		}
 		media = media / this.grafo.edgeSet().size() ;
 		
