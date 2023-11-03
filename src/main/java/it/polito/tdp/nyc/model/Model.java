@@ -18,7 +18,7 @@ public class Model {
 	
 	private List<String> boroughs ;
 	private List<NTA> NTAs ;
-	private Graph<NTA, DefaultWeightedEdge> grafo ;
+		
 	
 	public List<String> getBoroughs() {
 		if(this.boroughs==null) {
