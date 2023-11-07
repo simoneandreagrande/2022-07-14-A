@@ -29,55 +29,55 @@ public class Model {
 		return this.boroughs ;
 	}
 	
-	public void creaGrafo(String borough) {
-		NYCDao dao = new NYCDao() ;
-		this.NTAs = dao.getNTAbyBorough(borough) ;
-//		System.out.println(this.NTAs) ;
-		
-		this.grafo = new SimpleWeightedGraph<>(DefaultWeightedEdge.class) ;
-		// al grafo aggiungo i vertici
-		Graphs.addAllVertices(this.grafo, this.NTAs) ;
-		
-		// aggiungo anche gli archi, con le coppie di vertici
-		for(NTA n1: this.NTAs) {
-			for(NTA n2: this.NTAs) {
-				if(n1.getNTACode().compareTo(n2.getNTACode())<0) { // !n1.equals(n2) in questo caso scelgo un ordine, non si aggiunge comunque l'arco
-					Set<String> unione = new HashSet<>(n1.getSSIDs()) ;
-					unione.addAll(n2.getSSIDs()) ;
-					Graphs.addEdge(this.grafo, n1, n2, unione.size()) ;
-				}
-			}
-		}
-		// non esistono gli archi di peso zero, per definizione della query
-		System.out.println("Vertici: "+this.grafo.vertexSet().size()+", Archi: "+this.grafo.edgeSet().size());	
-	}
+//	public void creaGrafo(String borough) {
+//		NYCDao dao = new NYCDao() ;
+//		this.NTAs = dao.getNTAbyBorough(borough) ;
+////		System.out.println(this.NTAs) ;
+//		
+//		this.grafo = new SimpleWeightedGraph<>(DefaultWeightedEdge.class) ;
+//		// al grafo aggiungo i vertici
+//		Graphs.addAllVertices(this.grafo, this.NTAs) ;
+//		
+//		// aggiungo anche gli archi, con le coppie di vertici
+//		for(NTA n1: this.NTAs) {
+//			for(NTA n2: this.NTAs) {
+//				if(n1.getNTACode().compareTo(n2.getNTACode())<0) { // !n1.equals(n2) in questo caso scelgo un ordine, non si aggiunge comunque l'arco
+//					Set<String> unione = new HashSet<>(n1.getSSIDs()) ;
+//					unione.addAll(n2.getSSIDs()) ;
+//					Graphs.addEdge(this.grafo, n1, n2, unione.size()) ;
+//				}
+//			}
+//		}
+//		// non esistono gli archi di peso zero, per definizione della query
+//		System.out.println("Vertici: "+this.grafo.vertexSet().size()+", Archi: "+this.grafo.edgeSet().size());	
+//	}
 	
-	public List<Arco> analisiArchi() {
-		double media = 0.0 ;
-		for(DefaultWeightedEdge e: this.grafo.edgeSet()) {
-			media = media + this.grafo.getEdgeWeight(e) ;  // metodo di grafo
-		}
-		media = media / this.grafo.edgeSet().size() ;
-		
-		List<Arco> result = new ArrayList<>();
-		for(DefaultWeightedEdge e: this.grafo.edgeSet()) {
-			if(this.grafo.getEdgeWeight(e)>media) {
-				result.add(new Arco(
-						this.grafo.getEdgeSource(e).getNTACode(),
-						this.grafo.getEdgeTarget(e).getNTACode(),
-						(int)this.grafo.getEdgeWeight(e)
-						)) ;
-			}
-		}
-		
-		Collections.sort(result);
-		return result ;
-	}
+//	public List<Arco> analisiArchi() {
+//		double media = 0.0 ;
+//		for(DefaultWeightedEdge e: this.grafo.edgeSet()) {
+//			media = media + this.grafo.getEdgeWeight(e) ;  // metodo di grafo
+//		}
+//		media = media / this.grafo.edgeSet().size() ;
+//		
+//		List<Arco> result = new ArrayList<>();
+//		for(DefaultWeightedEdge e: this.grafo.edgeSet()) {
+//			if(this.grafo.getEdgeWeight(e)>media) {
+//				result.add(new Arco(
+//						this.grafo.getEdgeSource(e).getNTACode(),
+//						this.grafo.getEdgeTarget(e).getNTACode(),
+//						(int)this.grafo.getEdgeWeight(e)
+//						)) ;
+//			}
+//		}
+//		
+//		Collections.sort(result);
+//		return result ;
+//	}
 	
-	public Map<NTA, Integer> simula(double probShare, int durationShare) {
-		Simulator sim = new Simulator(this.grafo, probShare, durationShare) ;
-		sim.init();
-		sim.run();
-		return sim.getNumTotShare() ;
-	}
+//	public Map<NTA, Integer> simula(double probShare, int durationShare) {
+//		Simulator sim = new Simulator(this.grafo, probShare, durationShare) ;
+//		sim.init();
+//		sim.run();
+//		return sim.getNumTotShare() ;
+//	}
 }

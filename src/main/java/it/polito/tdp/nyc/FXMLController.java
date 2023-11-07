@@ -64,30 +64,30 @@ public class FXMLController {
     
     @FXML
     void doAnalisiArchi(ActionEvent event) {
-    	if(!this.grafoCreato) {
+//    	if(!this.grafoCreato) {
     		txtResult.appendText("Devi prima creare il grafo\n");
-    		return ;
-    	}
-    	List<Arco> archi = model.analisiArchi() ;
-    	for(Arco a: archi) {
-    		txtResult.appendText(a+"\n");
-    	}
+    		return;
+//    	}
+//    	List<Arco> archi = model.analisiArchi() ;
+//    	for(Arco a: archi) {
+//    		txtResult.appendText(a+"\n");
+//    	}
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-    	String borough = cmbBorough.getValue() ;
-    	if(borough==null) {
-    		txtResult.appendText("Seleziona una voce\n");
-    		return ;
-    	}
+//    	String borough = cmbBorough.getValue() ;
+//    	if(borough==null) {
+//    		txtResult.appendText("Seleziona una voce\n");
+//    		return ;
+//    	}
     	
     	
     	// ogni NTA è un vertice nel grafo, poi estraggo SSID dato NTA
-    	model.creaGrafo(borough);
-    	txtResult.setText("Grafo creato\n\n");
-    	this.grafoCreato = true ;
-    	
+//    	model.creaGrafo(borough);
+//    	txtResult.setText("Grafo creato\n\n");
+//    	this.grafoCreato = true ;
+//    	
     }
 
     @FXML
@@ -118,11 +118,11 @@ public class FXMLController {
     		return ;
     	}
     	
-    	Map<NTA, Integer> condivisioni = model.simula(prob, duration);
+//    	Map<NTA, Integer> condivisioni = model.simula(prob, duration);
     	
-    	for(NTA n : condivisioni.keySet()) {
-    		txtResult.appendText(n.getNTACode()+ " "+ condivisioni.get(n)+"\n");
-    	}
+//    	for(NTA n : condivisioni.keySet()) {
+//    		txtResult.appendText(n.getNTACode()+ " "+ condivisioni.get(n)+"\n");
+//    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
